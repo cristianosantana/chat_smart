@@ -1,0 +1,5 @@
+Flask
+openai
+mysql-connector-python
+python-dotenv
+Flask-Limiter

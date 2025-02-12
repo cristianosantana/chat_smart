@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat SQL Bot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+        textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        table {
+            border-collapse: collapse;
+            margin-top: 20px;
+            width: 100%;
+        }
+        th, td {
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Chat SQL Bot</h1>
+    <textarea id="pergunta" rows="4" cols="50" placeholder="Digite sua pergunta..."></textarea><br>
+    <button onclick="enviarPergunta()">Enviar</button>
+    <h2>Query Gerada:</h2>
+    <pre id="query"></pre>
+    <h2>Resultados:</h2>
+    <div id="resultados"></div> <!-- Altere para div para inserir HTML -->
+
+    <script>
+        async function enviarPergunta() {
+            const pergunta = document.getElementById('pergunta').value;
+            const response = await fetch('/pergunta', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ pergunta }),
+            });
+            const data = await response.json();
+            if(data.erro){
+                document.getElementById('query').innerText = "";
+                document.getElementById('resultados').innerHTML = `<span class="error">${data.erro}</span>`;
+            } else {
+                document.getElementById('query').innerText = data.query;
+                document.getElementById('resultados').innerHTML = data.tabela_html;
+            }
+        }
+    </script>
+</body>
+</html>
