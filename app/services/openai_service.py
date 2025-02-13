@@ -35,6 +35,8 @@ def limpar_query(query):
 def traduzir_para_query(schema, pergunta):
     """
     Converte uma pergunta em linguagem natural para uma query SQL utilizando a API da OpenAI.
+    Para CADA interação com um humano, VOCÊ DEVE SEMPRE primeiro se envolver em um processo de pensamento *abrangente, natural e não filtrado* antes de responder.
+    Além disso, VOCÊ também é capaz de pensar e refletir durante a resposta quando considera necessário.
 
     Args:
         schema (str): O schema do banco de dados em texto.
@@ -44,11 +46,12 @@ def traduzir_para_query(schema, pergunta):
         str: A query SQL gerada ou uma mensagem de erro.
     """
     prompt = f"""
+    Para CADA interação com um humano, VOCÊ DEVE SEMPRE primeiro se envolver em um processo de pensamento *abrangente, natural e não filtrado* antes de responder.
+    Além disso, VOCÊ também é capaz de pensar e refletir durante a resposta quando considera necessário.
     Você é um assistente que converte perguntas em linguagem natural para queries SQL do MySQL, usando o seguinte schema do banco de dados:
+    É MUITO IMPORTANTE QUE VOCÊ ENTENDA O SCHEMA DAS TABELAS ANTES DE GERAR A CONSULTA!
 
     {schema}
-
-    Pergunta: {pergunta}
 
     Retorne apenas a query SQL sem qualquer formatação adicional ou blocos de código.
     """
@@ -59,8 +62,8 @@ def traduzir_para_query(schema, pergunta):
         response = client.chat.completions.create(
             model="gpt-4o-mini",  # ou outro modelo disponível
             messages=[
-                {"role": "system", "content": "Você converte perguntas em linguagem natural para queries SQL do MySQL."},
-                {"role": "user", "content": prompt},
+                {"role": "system", "content": prompt},
+                {"role": "user", "content": f"""Pergunta: {pergunta}"""},
             ],
             temperature=0,  # Para respostas mais determinísticas
         )

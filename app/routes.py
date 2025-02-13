@@ -57,7 +57,7 @@ SCHEMA = """
     "relacionamentos": {}
 },
 "caixas": {
-    "descricao": "Tabela de caixas (movimentações financeiras, se tiver um ou mais registros a OS foi paga!) do sistema.",
+    "descricao": "Tabela de caixas (movimentações financeiras, se tiver um ou mais registros na tabela caixas a OS referente a este caixa foi paga!) do sistema.",
     "colunas": ("id","valor","data_vencimento","data_pagamento","cancelado","data_cancelamento","fechado","data_fechamento","classificado","data_classificacao","finalizado","verificado","data_verificacao","data_finalizacao","parcela","quant_parcelas","nome_depositante","codigo_transacao","nome_titular","doc_titular","telefone_titular","tid_cielo","bandeira_cartao","codigo_autorizacao","numero_autorizacao","nome_cartao","cc_conciliado","pix_payload","pix_info_pagador","pix_e2ed_id","pix_rtr_id","observacao_financeiro","caixa_preto","usuario_pagamento_id","usuario_verificacao_id","caixa_conta_id","caixa_tipo_id","caixa_pendente_id","caixa_status_id","caixa_fechamento_id","caixa_original_id","empresa_faturamento_id","financeiro_malote_classificacao_id","financeiro_caixa_destino_id","os_id","ativo","created_at","deleted_at"),
     "relacionamentos": {
         "caixa_contas": "caixa_contas.id = caixas.caixa_conta_id",
