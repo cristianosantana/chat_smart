@@ -3,7 +3,7 @@ from .config import Config
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 import logging
-from logging.handlers import RotatingFileHandler
+from logging.handlers import TimedRotatingFileHandler
 import os
 
 def create_app():
@@ -13,7 +13,11 @@ def create_app():
     # Configurar Logging
     if not os.path.exists('logs'):
         os.mkdir('logs')
-    file_handler = RotatingFileHandler('logs/chat_smart.log', maxBytes=10240, backupCount=10)
+
+    log_file = 'logs/chat_smart.log'
+
+    # Configuração para gerar um log por dia
+    file_handler = TimedRotatingFileHandler(log_file, when='midnight', interval=1, backupCount=10, encoding='utf-8')
     file_handler.setFormatter(logging.Formatter(
         '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'
     ))

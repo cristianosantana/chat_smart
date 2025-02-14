@@ -342,7 +342,7 @@ def init_openai():
     """
     openai.api_key = current_app.config['OPENAI_API_KEY']
 
-def limpar_query(query):
+def extrair_query_sql(query):
     """
     Remove blocos de código Markdown da query, se presentes.
     
@@ -401,7 +401,7 @@ def traduzir_para_query(schema, pergunta):
         query = response['choices'][0]['message']['content'].strip()
 
         # Limpar a query de quaisquer blocos de código Markdown
-        query = limpar_query(query)
+        query = extrair_query_sql(query)
 
         # Validação simples: Garantir que a query começa com SELECT
         if not re.match(r'^SELECT\b', query, re.IGNORECASE):
@@ -746,7 +746,7 @@ def traduzir_para_query(schema, pergunta):
         query = response['choices'][0]['message']['content'].strip()
 
         # Limpar a query de quaisquer blocos de código Markdown
-        query = limpar_query(query)
+        query = extrair_query_sql(query)
 
         # Validação simples: Garantir que a query começa com SELECT
         if not re.match(r'^SELECT\b', query, re.IGNORECASE):
