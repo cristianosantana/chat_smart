@@ -52,6 +52,7 @@
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ pergunta }),
+                
             });
             const data = await response.json();
             if(data.erro){
