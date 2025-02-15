@@ -301,6 +301,7 @@ def traduzir_para_query(schema, pergunta):
             - É MUITO IMPORTANTE QUE VOCÊ ENTENDA O SCHEMA DAS TABELAS ANTES DE GERAR A CONSULTA!
             - ENTENDA QUAL AGRUPAMENTO DE DADOS E IDEAL PARA VOCÊ RESPONDER A PERGUNTA!
             - É MUITO IMPORTANTE QUE NA SUA RESPOSTA TENHA UMA CONSULTA SQL VÁLIDA! BASEADA NO SCHEMA DAS TABELAS!
+            - É MUITO IMPORTANTE QUE A CONSULTA OU QUERY ESTEJA ENTRE ```sql * ```.
 
     SCHEMA DAS TABELAS: {schema}
 
@@ -329,9 +330,6 @@ def traduzir_para_query(schema, pergunta):
         # Se não encontrar a query, tenta extrair de outro padrão
         if query == 0:
             query = extrair_query_sql(r'```\s+([\s\S]*?)\s+```', content)
-        
-        if query == 0:
-            query = extrair_query_sql(r'SELECT\s+([\s\S]*?)\s+;', content)
 
         # Validação simples: Garantir que a query começa com SELECT
         if not re.match(r'^SELECT', query, re.IGNORECASE):
