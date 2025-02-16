@@ -333,9 +333,9 @@ def traduzir_para_query(schema, pergunta):
 
         # Validação simples: Garantir que a query começa com SELECT
         if not re.match(r'^SELECT', query, re.IGNORECASE):
-            raise ValueError("A query gerada não é uma SELECT. Somente queries SELECT são permitidas.")
+            raise ValueError(f"Problemas ao buscar a query na RESPOSTA do agente: {content}")
 
         return query
     except Exception as e:
-        current_app.logger.error(f"Erro na tradução para query: {e}")
-        return f"Erro na tradução da pergunta: {str(e)}"
+        current_app.logger.error(str(e))
+        return str(e)
